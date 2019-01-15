@@ -2,12 +2,12 @@
 {% load staticfiles %}
 {% load blog_tags %}
 {% block title %}
-<title>分類頁面</title>
+<title>{{ blogtype }}</title>
 {% endblock %}
 {% block blog %}
-{% for blog in blogs %}
-    <h3>{{ blog.blogtype }}</h3>
-{% endfor %}
+
+    <h3>{{ blogtype }}</h3>
+
     {% for blog in blogs %}
         <br>
         <div class="jumbotron">

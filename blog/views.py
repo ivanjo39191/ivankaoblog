@@ -28,6 +28,7 @@ def blog_type(request, type_pk):
 
     blog_all_list = Blog.objects.filter(blogtype=type_pk)
     context = common_blog(request,blog_all_list)
+    context['blogtype'] = BlogType.objects.get(id=type_pk)
 
     return render(request, "blog_type.html", context )
 
