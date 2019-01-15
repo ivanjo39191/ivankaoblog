@@ -1,0 +1,9 @@
+img {
+    max-width: 100%;
+    height: auto;
+    }
+body { padding-top: 70px; }
+
+div.django-ckeditor-widget {
+    width: 100%;
+}

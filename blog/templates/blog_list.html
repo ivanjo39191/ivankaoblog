@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load blog_tags %}
+{% block title %}
+<title>文章列表</title>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            {% block blog %}
+                <h3>文章列表</h3>
+                <br>
+                {% for blog_type in blog_types %}
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4><a href="{% url 'blog_type' blog_type.pk %}" style="color: #0174DF">{{ blog_type }}</a></h4>
+                            </div>
+                          <div class="panel-body">
+                              {% type_name_blog blog_type as type_blogs %}
+                                {% for type_blog in type_blogs %}
+                                    <p><a href="{% url 'blog_detail' type_blog.pk %}" style="color:black">{{ type_blog }}</a></p>
+                                {% endfor %}
+                                <br>
+                                <p style="float:right"><a href="{% url 'blog_type' blog_type.pk %}">顯示更多...</a></p>
+                          </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endblock %}
+        </div>
+        <div class="col-md-2">
+            <br>
+            <br>
+            <div>
+                <h4>個人簡介</h4>
+                <h3>ivankao</h3>
+                    <p>我把自己學習的歷程記錄在這個部落格。
+喜歡自己研究，然後沉浸在失敗中除錯，
+也時常一邊學習一邊將網路上、書籍上的資訊整理起來，
+或許能幫助遇上同樣問題的朋友。
+</p>
+            </div>
+            <br><br><br>
+            <div>
+                <h4>文章分類</h4>
+                {% for blog_type in blog_types %}
+                <div><a href="{% url 'blog_type' blog_type.pk %}" style="color: #000000">{{ blog_type.type_name }}</a>({{ blog_type.blog_count }})</div>
+                {% endfor %}
+            </div>
+
+            <br><br><br><br><br>
+            <div>
+                <h4>作品相關</h4>
+                    <p><a href="{% url 'blog_list' %}" target="_blank">程式部落格</a></p>
+                    <p><a href="http://ivanjo39192.pythonanywhere.com" target="_blank">定期爬蟲比價網站</a></p>
+                    <p><a href="http://cosmepick.xyz" target="_blank">大學專題— 美妝比價網站</a></p>
+                    <p><a href="https://girlfrontlineinfo.herokuapp.com/" target="_blank">遊戲資訊爬蟲網</a></p>
+                    <p><a href="/blog/blog_type/90" target="_blank">爬蟲相關程式</a></p>
+                    <p><a href="http://github.com/ivanjo39191" target="_blank">GitHub</a></p>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}

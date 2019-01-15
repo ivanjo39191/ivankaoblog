@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block header_extends %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock %}
+{% block title %}
+{% for blog in blogs %}
+    <title>{{ blog.blogtitle }}</title>
+{% endfor %}
+{% endblock %}
+{% block content %}
+<div class="container">
+    {% for blog in blogs %}
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">            
+            <div class="header">
+                <h2>{{ blog.blogtitle }}</h2>
+                <!-- <p>作者：{{ blog.blogauthor }}</p> -->
+                <p>分類：<a href="{% url 'blog_type' blog.blogtype.pk %}">{{ blog.blogtype }}</a></p>
+                <p>發文時間：{{ blog.created_time }}</p>
+            </div>
+            <br><br>
+            <div class="content">
+                {{ blog.blogcontent|safe }}
+            </div>            
+        </div>
+    </div>
+    <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+                <div class="comment-area">
+                    <h3 class="comment-area_title">提交評論</h3>
+                    {% if user.is_authenticated %}
+                        <form action="{% url 'update_comment' %}" method="POST" style="overflow:hidden">
+                            {% csrf_token %}
+                            <label>{{ user.username }}，歡迎評論</label>
+                            {% for field in comment_form %}
+                                {{ field }}
+                            {% endfor %}
+                            <input type="submit" value="評論" class="btn btn-primary pull-right" style="float:right">
+                        </form>
+                    {% else %}
+                        您尚未登錄，登錄之後方可評論
+                        <a class="btn btn-primary" href="{% url 'login' %}?from={{ request.get_full_path }}">登錄</a>
+                        <a class="btn btn-primary" href="{% url 'register' %}?from={{ request.get_full_path }}">註冊</a>
+                    {% endif %}
+                </div>
+                <div class="comment-area">
+                    <h3 class="comment-area_title">評論列表</h3>
+                    {% for comment in comments %}
+                        <div>
+                        <span>{{ comment.user }}</span>
+                        <span>({{ comment.comment_time|date:"Y-m-d H:n:s" }}):</span>
+                        <span>{{comment.text |safe }}</span>
+                        </div>
+                    {% empty %}
+                        暫無評論
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+{% endblock %}

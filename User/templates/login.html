@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}
+    <title>登入頁面</title>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel panel-heading">登入</div>
+                    <div class="panel panel-body">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                {% for field in login_form %}
+                                <!-- 移除冒號 -->
+                                <label for="{{ field.id_for_label }}">{{field.label}}</label>
+                                {{ field }}
+                                <!-- 錯誤訊息紅字顯示 -->
+                                <p class="text-danger">{{ field.errors.as_text }}</p>
+                                {% endfor %}
+                                <span class="pull-left text-danger">{{ login_form.non_field_errors }}</span>
+                                <input type="submit" value="登錄" class="btn btn-primary pull-right">
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

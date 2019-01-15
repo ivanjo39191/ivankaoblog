@@ -1,0 +1,21 @@
+{% extends "blog_list.html" %}
+{% load staticfiles %}
+{% load blog_tags %}
+{% block title %}
+<title>分類頁面</title>
+{% endblock %}
+{% block blog %}
+{% for blog in blogs %}
+    <h3>{{ blog.blogtype }}</h3>
+{% endfor %}
+    {% for blog in blogs %}
+        <br>
+        <div class="jumbotron">
+          <h3>{{ blog.blogtitle }}</h3>
+          <h5>{{ blog.blogcontent|safe|striptags|truncatechars:100 }}</h5>
+          <br>
+          <p><a class="btn btn-primary btn-md" href="{% url 'blog_detail' blog.pk %}" role="button">繼續閱讀</a></p>
+        </div>
+
+    {% endfor %}
+{% endblock %}
