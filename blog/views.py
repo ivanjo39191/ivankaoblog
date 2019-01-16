@@ -19,7 +19,12 @@ def common_blog(request,blog_all_list):
 def blog_list(request):
 
     blog_all_list = Blog.objects.all()
+    blog_new = Blog.objects.all()[:5]
+    blog_new2 = Blog.objects.all()[5:10]
     context = common_blog(request,blog_all_list)
+    context['blog_new'] = blog_new
+    context['blog_new2'] = blog_new2
+    
     
     return render(request,"blog_list.html",context)
 

@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% load blog_tags %}
-{% load blog_news %}
-{% load blog_news2 %}
 {% block title %}
 <title>文章列表</title>
 {% endblock %}
@@ -18,17 +16,15 @@
                             <div class="panel-heading">
                                 <h4 style="color: #0174DF">最新文章</h4>
                                   <div class="panel-body ">
-                                        <div class="col-md-6">
-                                      {% blog_name_newest as blog_newests %}
-                                        {% for blog_newest in blog_newests %}
-                                            <p><a href="{% url 'blog_detail' 4 %}" style="color:black">{{ blog_newest }}</a></p>
+                                        <div class="col-md-6">                                      
+                                        {% for blog in blog_new %}
+                                            <p><a href="{% url 'blog_detail' 4 %}" style="color:black">{{ blog.blogtitle }}</a></p>
                                         {% endfor %}
                                         <br>   
                                         </div>     
                                   <div class="col-md-6">
-                                      {% blog_name_newest2 as blog_newests2 %}
-                                        {% for blog_newest in blog_newests2 %}
-                                            <p><a href="{% url 'blog_detail' 4 %}" style="color:black">{{ blog_newest }}</a></p>
+                                        {% for blog in blog_new2 %}
+                                            <p><a href="{% url 'blog_detail' 4 %}" style="color:black">{{ blog.blogtitle }}</a></p>
                                         {% endfor %}
                                         <br>      
                                         </div>  
