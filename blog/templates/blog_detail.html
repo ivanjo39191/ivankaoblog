@@ -19,7 +19,7 @@
                 <h2>{{ blog.blogtitle }}</h2>
                 <!-- <p>作者：{{ blog.blogauthor }}</p> -->
                 <p>分類：<a href="{% url 'blog_type' blog.blogtype.pk %}">{{ blog.blogtype }}</a></p>
-                <p>發文時間：{{ blog.created_time }}</p>
+                <p>發文時間：{{ blog.blog_time }}</p>
             </div>
             <br><br>
             <div class="content">

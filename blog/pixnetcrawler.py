@@ -25,7 +25,7 @@ def crawler_do(link):
     contents = sp.find("div",{"class":"article-content-inner"})
     content = str(contents)
     #日期
-    published = sp.find("li",{"class":"publish"})
+    published = str(sp.find("li",{"class":"publish"}).text)
     #下一篇連結
     category = sp.find("div",{"class":"article-footer"}).find("a", href = re.compile('/blog/category')).text
 
@@ -36,7 +36,8 @@ def crawler_do(link):
     print(title)
     print(content)
     print(category)
-    sql(title,content,category)
+    print(published)
+    sql(title,content,category,published)
     try:
         crawler_do(nextlink)
     except:
@@ -44,10 +45,11 @@ def crawler_do(link):
         return redirect('home.html')
 
 
-def sql(title,content,category):
+def sql(title,content,category,published):
     blogtitle = title
     blogcontent = content
     blogtype = category
+    blog_time = published
 
     try:
         typename = BlogType.objects.get(type_name=blogtype)
@@ -62,11 +64,12 @@ def sql(title,content,category):
         blogdb = Blog.objects.get(blogtitle=blogtitle)
         blogdb.blogcontent = blogcontent
         blogdb.blogtype = typename
+        blogdb.blog_time= blog_time
 
 
         blogdb.save()
         print('更新資料')
     except:
-        blogdb = Blog.objects.create(blogtitle=blogtitle,blogcontent=blogcontent, blogtype=typename)
+        blogdb = Blog.objects.create(blogtitle=blogtitle,blogcontent=blogcontent, blogtype=typename, blog_time=blog_time)
         blogdb.save()
         print('成功存入一筆資料')

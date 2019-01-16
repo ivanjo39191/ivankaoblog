@@ -17,6 +17,7 @@ class Blog(models.Model):
     blogcontent = RichTextUploadingField() #改為RichTextField
     blogtype = models.ForeignKey(BlogType, on_delete=models.CASCADE)
     blogauthor = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    blog_time = models.CharField(max_length=200,null=True)
     created_time = models.DateTimeField(auto_now_add=True)
     last_updated_time = models.DateTimeField(auto_now=True)
 
